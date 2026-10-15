@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>《列国》· 世界历史人物志</title>
+<meta name="description" content="__DESC__">
+<style>
+:root{
+  --paper:#f3eee2;--paper-2:#e6dfcb;--paper-3:#faf7ef;
+  --ink:#181712;--ink-2:#3c3830;--ink-3:#77705f;
+  --crimson:#8f2b21;--crimson-2:#bf8878;
+  --bronze:#9a7b3c;--bronze-2:#d2ba84;
+  --ultra:#1f3a5f;--ultra-2:#7d94ae;
+  --line:rgba(24,23,18,.15);--line-2:rgba(24,23,18,.33);
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman","Source Han Serif SC","Noto Serif SC","Songti SC",STSong,"SimSun",serif;
+  --sans:"Optima","Gill Sans MT","Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  background-image:
+    radial-gradient(1200px 600px at 50% -14%,var(--paper-3) 0%,rgba(250,247,239,0) 64%),
+    repeating-linear-gradient(0deg,rgba(120,105,80,.030) 0 1px,transparent 1px 3px);
+  color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;line-height:1.86;
+}
+
+/* ① 双线书框：外一层青铜金、内一层群青（与刊内页骨架同构） */
+.frame{position:fixed;inset:13px;border:1px solid rgba(154,123,60,.55);pointer-events:none;z-index:9}
+.frame::after{content:"";position:absolute;inset:5px;border:1px solid rgba(31,58,95,.32)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:78px 40px 104px}
+
+/* ② 齿饰带 dentil */
+.dentil{height:5px;margin-bottom:26px;
+  background-image:repeating-linear-gradient(90deg,var(--bronze) 0 3px,rgba(0,0,0,0) 3px 14px);opacity:.72}
+
+/* ③ 刊头 */
+.masthead{text-align:center}
+.wordmark{display:flex;align-items:flex-end;justify-content:center;gap:20px;flex-wrap:wrap}
+.wordmark .lat{font-family:var(--serif);font-size:13px;letter-spacing:.62em;color:var(--bronze);padding-bottom:16px;text-transform:uppercase}
+.wordmark .han{font-family:var(--serif);font-size:82px;line-height:.92;letter-spacing:.16em;font-weight:600;color:var(--ink)}
+.brand-meta{margin-top:12px}
+.brand-meta .cn{font-size:14px;letter-spacing:.5em;color:var(--ink-2);text-indent:.5em}
+.brand-meta .en{font-family:var(--serif);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);margin-top:9px;text-transform:uppercase}
+.rule-bronze{height:1px;background:var(--bronze);opacity:.62;margin:26px 0 0}
+.rule-bronze.thin{height:1px;background:var(--line-2);opacity:.7;margin-top:34px}
+
+.standfirst{font-family:var(--serif);font-size:21px;line-height:1.82;color:var(--ink-2);
+  margin:30px auto 6px;max-width:31em;text-align:center}
+.standfirst em{font-style:normal;color:var(--crimson);border-bottom:1px solid rgba(143,43,33,.35);padding-bottom:1px}
+.standfirst .lat{display:block;font-size:11px;letter-spacing:.3em;color:var(--bronze);margin-top:14px;text-transform:uppercase}
+
+/* ④ 栏题 rubric */
+.rubric{margin:62px 0 20px;display:flex;align-items:baseline;justify-content:center;gap:18px;flex-wrap:wrap;font-weight:400}
+.rubric .cn{font-size:13.5px;letter-spacing:.36em;color:var(--ink-3);text-indent:.36em}
+.rubric .lat{font-size:10px;letter-spacing:.24em;color:var(--bronze);text-transform:uppercase}
+.rubric::after{content:"";flex:1 0 100%;height:1px;background:var(--line);order:3}
+
+/* ⑤ 文明筛条 civbar */
+.civbar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 22px}
+.civchip{
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;color:var(--ink-2);
+  background:var(--paper-3);border:1px solid var(--line-2);padding:7px 14px;
+  cursor:pointer;transition:.25s;display:inline-flex;align-items:center;gap:8px;line-height:1.4;
+}
+.civchip:hover{border-color:var(--ultra-2);color:var(--ultra)}
+.civchip.on{background:var(--ultra);border-color:var(--ultra);color:var(--paper-3)}
+.civchip i{font-style:normal;font-size:10.5px;opacity:.68;letter-spacing:0;font-family:var(--serif)}
+
+/* ⑥ 统计条 census */
+.census{
+  display:flex;justify-content:center;gap:16px;flex-wrap:wrap;
+  margin:0 0 34px;padding:13px 0 0;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:12px;color:var(--ink-3);letter-spacing:.08em;
+}
+.census b{color:var(--crimson);font-weight:600}
+.census span.dim{color:#9c9184}
+
+/* ⑦ 文明分节 gens */
+.gens{margin:0 0 46px}
+.gens-h{
+  display:flex;align-items:baseline;gap:15px;flex-wrap:wrap;
+  padding:13px 0 10px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:24px;
+}
+.gens-h .rom{font-family:var(--serif);font-size:13px;letter-spacing:.2em;color:var(--bronze);padding-bottom:3px;min-width:2.6em}
+.gens-h .gn{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.13em;color:var(--ink);line-height:1}
+.gens-h .gs{font-family:var(--serif);font-size:10.5px;letter-spacing:.14em;color:var(--bronze);
+  border:1px solid rgba(154,123,60,.45);padding:2px 9px}
+.gens-h .gc{font-family:var(--sans);font-size:11.5px;color:var(--ink-3);letter-spacing:.12em;margin-left:auto}
+
+/* ⑧ 期次卡 rec（文左图右，与《列传》刊库的图左文右互为镜像） */
+.rec{
+  display:grid;grid-template-columns:1fr 40%;gap:0;
+  background:var(--paper-3);border:1px solid var(--line);
+  text-decoration:none;color:inherit;margin-bottom:28px;
+  box-shadow:0 20px 44px -32px rgba(50,40,25,.9);
+  transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,border-color .35s;
+  overflow:hidden;
+}
+.rec:hover{transform:translateY(-4px);border-color:var(--bronze);box-shadow:0 28px 56px -32px rgba(50,40,25,.95)}
+.rec .plate-img{position:relative;background:var(--paper-2);border-left:1px solid var(--line);order:2}
+.rec .plate-img img{display:block;width:100%;height:100%;object-fit:cover}
+.rec .plate-img::after{content:"";position:absolute;inset:0;
+  box-shadow:inset 0 0 0 1px rgba(154,123,60,.55),inset 0 0 0 9px rgba(250,247,239,.30);pointer-events:none}
+.rec-body{padding:30px 32px 26px;order:1;border-top:3px solid var(--ultra)}
+.rec-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-family:var(--sans)}
+.rec-row .no{font-size:11px;letter-spacing:.22em;color:var(--crimson)}
+.rec-row .date{font-size:11px;letter-spacing:.14em;color:var(--ink-3)}
+.rec-row .tag{font-size:10px;letter-spacing:.16em;color:var(--bronze);border:1px solid rgba(154,123,60,.45);padding:2px 9px}
+.rec .series{font-family:var(--serif);font-size:12.5px;letter-spacing:.2em;color:var(--bronze);margin:-2px 0 8px}
+.rec h3{font-family:var(--serif);font-size:40px;line-height:1.12;margin:4px 0 6px;letter-spacing:.04em;font-weight:600}
+.rec .sub{font-family:var(--serif);font-size:12.5px;color:var(--ink-3);letter-spacing:.1em;margin-bottom:16px}
+.rec p.desc{font-size:14.5px;color:var(--ink-2);margin:0 0 18px;line-height:1.86}
+.rec .toc{list-style:none;margin:0 0 22px;padding:15px 0 0;border-top:1px solid var(--line)}
+.rec .toc li{font-size:13px;color:var(--ink-2);line-height:2}
+.rec .toc li b{color:var(--crimson);font-weight:600;margin-right:8px;letter-spacing:.1em;font-family:var(--serif)}
+.enter{display:inline-block;font-family:var(--sans);font-size:12.5px;letter-spacing:.18em;
+  color:var(--paper-3);background:var(--crimson);padding:9px 20px;transition:.3s}
+.rec:hover .enter{background:#a4361f}
+.empty{padding:54px 0;text-align:center;font-family:var(--serif);font-size:15px;color:var(--ink-3);letter-spacing:.2em}
+
+/* ⑨ 分页 pagina */
+.pagina{display:flex;justify-content:center;align-items:center;gap:8px;margin:50px 0 0;flex-wrap:wrap}
+.pagina button{
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.08em;min-width:40px;height:38px;padding:0 13px;
+  background:var(--paper-3);border:1px solid var(--line-2);color:var(--ink-2);cursor:pointer;transition:.25s;
+}
+.pagina button:hover:not(:disabled){border-color:var(--ultra);color:var(--ultra)}
+.pagina button.on{background:var(--ultra);border-color:var(--ultra);color:var(--paper-3);cursor:default}
+.pagina button:disabled{opacity:.35;cursor:default}
+.pagina .pinfo{font-family:var(--serif);font-size:12px;color:var(--ink-3);letter-spacing:.1em;margin-left:8px}
+
+/* ⑩ 筹备中 vetus */
+.vetus{
+  margin-top:44px;padding:18px 22px;background:var(--paper-3);border:1px dashed var(--line-2);
+  font-size:12.5px;color:var(--ink-3);letter-spacing:.05em;text-align:center;line-height:1.95;
+}
+.vetus b{color:var(--crimson);font-weight:600}
+
+footer{margin-top:72px}
+footer p{font-family:var(--sans);font-size:12px;color:var(--ink-3);margin:16px 0 0;letter-spacing:.04em}
+footer p.dim{color:#9c9184;font-size:11.5px;font-family:var(--serif);line-height:1.95}
+footer .colophon{font-family:var(--serif);font-size:11px;letter-spacing:.26em;color:var(--bronze);text-transform:uppercase;text-align:center;margin-top:20px}
+
+@media (max-width:820px){
+  .frame{inset:6px}
+  .frame::after{display:none}
+  .wrap{padding:46px 18px 78px}
+  .wordmark .han{font-size:58px}
+  .wordmark .lat{letter-spacing:.4em;padding-bottom:11px}
+  .standfirst{font-size:18px}
+  .rec{grid-template-columns:1fr}
+  .rec .plate-img{border-left:0;border-bottom:1px solid var(--line);aspect-ratio:3/2;order:0}
+  .rec-body{padding:22px 20px 24px}
+  .rec h3{font-size:31px}
+  .rubric{margin-top:46px}
+  .gens-h .gn{font-size:21px}
+  .gens-h .gc{margin-left:0;width:100%}
+  .pagina button{min-width:36px;height:36px;padding:0 10px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="dentil" aria-hidden="true"></div>
+    <div class="wordmark">
+      <span class="lat">Gentes</span>
+      <span class="han">列国</span>
+    </div>
+    <div class="brand-meta">
+      <div class="cn">世界历史人物志</div>
+      <div class="en">A Journal of World Lives</div>
+    </div>
+    <p class="standfirst">每期只讲一个外国人，每期换一套版式。<br>从一个人身上，看清<em>一种制度</em>是怎样被建立、又是怎样被拆掉的。
+      <span class="lat">Unus homo, una civitas</span>
+    </p>
+    <div class="rule-bronze" style="margin-top:34px"></div>
+  </header>
+
+  <section>
+    <h2 class="rubric"><span class="cn">按 文 明 ／ 国 家 浏 览</span><span class="lat">Gentes Ordine Digestae</span></h2>
+    <div class="civbar" id="civbar"><!--FACET--></div>
+    <div class="census" id="census"><!--META--></div>
+    <div id="list"><!--LIST--></div>
+    <nav class="pagina" id="pagina" aria-label="分页"></nav>
+
+    <div class="vetus">
+      第 <b>02</b> 期筹备中 —— 仍从一个人切入，沿用「正史与一手文献 + 图表 + 想象插画 + 真实经纬度舆图」的体例，每期另换一套版式。<br>
+      想读哪个文明、哪个人，可以在目录页点名下期。
+    </div>
+  </section>
+
+  <footer>
+    <div class="rule-bronze thin"></div>
+    <p>《列国》刊库 &middot; 纯静态单文件 &middot; 手机可直接阅读，电脑上 Ctrl+P 可导出 PDF</p>
+    <p class="dim"><!--FOOT--></p>
+    <div class="colophon">Gentes &middot; MMXXVI</div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  "use strict";
+  var PER_PAGE = 3;
+  var list = document.getElementById("list");
+  var civbar = document.getElementById("civbar");
+  var pagina = document.getElementById("pagina");
+  var census = document.getElementById("census");
+  if(!list || !civbar || !pagina) return;
+
+  /* 1) 从静态 DOM 读取全部数据（无 JS 时本段不执行，整份列表照常显示） */
+  var CIVS = [], ALL = [], MAP = {};
+  var secs = list.querySelectorAll(".gens");
+  for(var i=0;i<secs.length;i++){
+    var s = secs[i];
+    var key = s.getAttribute("data-civ");
+    var head = s.querySelector(".gens-h");
+    var cards = s.querySelectorAll(".rec");
+    var arr = [];
+    for(var j=0;j<cards.length;j++){
+      var html = cards[j].outerHTML;
+      arr.push(html);
+      ALL.push({civ:key, html:html});
+    }
+    var d = {
+      key:key,
+      name:s.getAttribute("data-name") || key,
+      /* 分节的三个 data-* 属性要跟着重渲染一起还原：
+         只存 head 的话，重渲染出来的 <section> 会丢掉 data-civ/data-name/data-year，
+         此后任何「再扫一遍 DOM」的脚本/测试都会拿到空值。 */
+      attrs:' data-civ="'+s.getAttribute("data-civ")+'"'
+           +' data-name="'+(s.getAttribute("data-name")||"")+'"'
+           +' data-year="'+(s.getAttribute("data-year")||"")+'"',
+      head: head ? head.outerHTML : '<div class="gens-h"><span class="gn">'+key+'</span></div>',
+      cards:arr
+    };
+    CIVS.push(d); MAP[key] = d;
+  }
+  if(!ALL.length) return;
+
+  var state = {civ:"all", page:1};
+
+  function items(){
+    if(state.civ === "all") return ALL;
+    var r = [];
+    for(var i=0;i<ALL.length;i++) if(ALL[i].civ === state.civ) r.push(ALL[i]);
+    return r;
+  }
+  function pages(t){ return Math.max(1, Math.ceil(t.length / PER_PAGE)); }
+
+  function renderFacet(){
+    var h = ['<button type="button" class="civchip'+(state.civ==="all"?" on":"")+'" data-civ="all">全部 <i>'+ALL.length+'</i></button>'];
+    for(var i=0;i<CIVS.length;i++){
+      var d = CIVS[i];
+      h.push('<button type="button" class="civchip'+(state.civ===d.key?" on":"")+'" data-civ="'+d.key+'">'+d.name+' <i>'+d.cards.length+'</i></button>');
+    }
+    civbar.innerHTML = h.join("");
+  }
+  function renderMeta(){
+    census.innerHTML = '共 <b>'+ALL.length+'</b> 期 &middot; <b>'+CIVS.length+'</b> 个文明 &nbsp;|&nbsp; 依文明先后排列'
+      + ' &nbsp;|&nbsp; <span class="dim">每页 '+PER_PAGE+' 期</span>';
+  }
+  function renderList(t){
+    var buf = [], open = false, last = null, start = (state.page-1)*PER_PAGE;
+    var slice = t.slice(start, start+PER_PAGE);
+    if(!slice.length){ list.innerHTML = '<div class="empty">本文明暂无已出期次</div>'; return; }
+    for(var i=0;i<slice.length;i++){
+      var it = slice[i];
+      if(it.civ !== last){
+        if(open) buf.push("</section>");
+        buf.push('<section class="gens"'+MAP[it.civ].attrs+'>' + MAP[it.civ].head);
+        open = true; last = it.civ;
+      }
+      buf.push(it.html);
+    }
+    if(open) buf.push("</section>");
+    list.innerHTML = buf.join("");
+  }
+  function renderPager(t){
+    var tp = pages(t);
+    if(tp <= 1){ pagina.innerHTML = ""; return; }
+    var h = ['<button type="button" data-go="prev"'+(state.page<=1?" disabled":"")+'>&lsaquo; 上一页</button>'];
+    for(var i=1;i<=tp;i++) h.push('<button type="button" data-go="'+i+'"'+(i===state.page?' class="on"':"")+'>'+i+'</button>');
+    h.push('<button type="button" data-go="next"'+(state.page>=tp?" disabled":"")+'>下一页 &rsaquo;</button>');
+    h.push('<span class="pinfo">Pag. '+state.page+' / '+tp+'</span>');
+    pagina.innerHTML = h.join("");
+  }
+  function render(scroll){
+    var t = items();
+    if(state.page > pages(t)) state.page = pages(t);
+    if(state.page < 1) state.page = 1;
+    renderFacet(); renderMeta(); renderList(t); renderPager(t);
+    if(scroll && civbar.getBoundingClientRect){
+      var r = civbar.getBoundingClientRect();
+      var y = r.top + (window.pageYOffset||0) - 24;
+      try{ window.scrollTo({top:y, behavior:"smooth"}); }catch(e){ window.scrollTo(0,y); }
+    }
+  }
+  civbar.addEventListener("click", function(e){
+    var b = e.target;
+    while(b && b !== civbar && !(b.getAttribute && b.getAttribute("data-civ"))) b = b.parentNode;
+    if(!b || !b.getAttribute || !b.getAttribute("data-civ")) return;
+    var cv = b.getAttribute("data-civ");
+    if(cv === state.civ) return;
+    state.civ = cv; state.page = 1; render(true);
+  });
+  pagina.addEventListener("click", function(e){
+    var b = e.target;
+    while(b && b !== pagina && !(b.getAttribute && b.getAttribute("data-go"))) b = b.parentNode;
+    if(!b || !b.getAttribute) return;
+    var g = b.getAttribute("data-go");
+    if(!g || b.disabled) return;
+    var tp = pages(items());
+    if(g === "prev") state.page--;
+    else if(g === "next") state.page++;
+    else state.page = parseInt(g, 10) || 1;
+    if(state.page < 1) state.page = 1;
+    if(state.page > tp) state.page = tp;
+    render(true);
+  });
+  render(false);
+})();
+</script>
+</body>
+</html>
