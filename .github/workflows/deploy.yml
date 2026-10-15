@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-abroad-history-magzine
+  group: deploy-abroad-history-magazine
   cancel-in-progress: false
 
 jobs:
@@ -45,9 +45,9 @@ jobs:
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
             "mkdir -p /root/ahm-backup && TS=\$(date +%Y%m%d-%H%M%S) && \
-             tar czf /root/ahm-backup/abroad-history-magzine-\$TS.tgz \
+             tar czf /root/ahm-backup/abroad-history-magazine-\$TS.tgz \
                -C $(dirname ${{ secrets.DEPLOY_PATH }}) $(basename ${{ secrets.DEPLOY_PATH }}) && \
-             echo 备份完成 /root/ahm-backup/abroad-history-magzine-\$TS.tgz && \
+             echo 备份完成 /root/ahm-backup/abroad-history-magazine-\$TS.tgz && \
              ls -la /root/ahm-backup/ | tail -3"
 
       - name: 上传站点
@@ -85,7 +85,7 @@ jobs:
       - name: 公网实测
         run: |
           set -euo pipefail
-          B="http://${{ secrets.DEPLOY_HOST }}/abroad-history-magzine"
+          B="http://${{ secrets.DEPLOY_HOST }}/abroad-history-magazine"
           FAIL=0
           check() {
             OUT=$(curl -s -o /dev/null -w "%{http_code} %{size_download}" "$1")

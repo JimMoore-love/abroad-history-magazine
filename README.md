@@ -3,7 +3,7 @@
 一期一人，按**文明／国家**归档的世界历史人物志期刊。全部为**单文件 HTML**（插画、舆图全部 base64 内嵌），
 可离线打开、可打印成 PDF，**不依赖任何 CDN 或外链资源**。
 
-线上站点：**http://139.196.5.123/abroad-history-magzine/**
+线上站点：**http://139.196.5.123/abroad-history-magazine/**
 本仓库即线上站点的**唯一源**：仓库根目录 = 站点根目录。
 
 > 与同一服务器上的《列传》（中国历史人物志，`/history-magazine/`）互为姊妹刊：
@@ -63,7 +63,7 @@ push 到 main
    ↓
 上传前先在服务器端 tar 备份到 /root/ahm-backup/
    ↓
-tar 管道上传到 /usr/share/nginx/html/abroad-history-magzine/
+tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
    ↓
 服务器端 sha1sum 逐文件比对（本地 ≠ 线上则整个 job 失败）
    ↓
