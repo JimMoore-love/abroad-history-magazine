@@ -39,8 +39,8 @@ body{
 
 /* ③ 刊头 */
 .masthead{text-align:center}
-.wordmark{display:flex;align-items:flex-end;justify-content:center;gap:20px;flex-wrap:wrap}
-.wordmark .lat{font-family:var(--serif);font-size:13px;letter-spacing:.62em;color:var(--bronze);padding-bottom:16px;text-transform:uppercase}
+.wordmark{display:flex;flex-direction:column;align-items:center;gap:6px}
+.wordmark .lat{font-family:var(--serif);font-size:13px;letter-spacing:.62em;color:var(--bronze);text-indent:.62em;text-transform:uppercase}
 .wordmark .han{font-family:var(--serif);font-size:82px;line-height:.92;letter-spacing:.16em;font-weight:600;color:var(--ink)}
 .brand-meta{margin-top:12px}
 .brand-meta .cn{font-size:14px;letter-spacing:.5em;color:var(--ink-2);text-indent:.5em}
@@ -150,7 +150,7 @@ footer .colophon{font-family:var(--serif);font-size:11px;letter-spacing:.26em;co
   .frame::after{display:none}
   .wrap{padding:46px 18px 78px}
   .wordmark .han{font-size:58px}
-  .wordmark .lat{letter-spacing:.4em;padding-bottom:11px}
+  .wordmark .lat{letter-spacing:.42em;text-indent:.42em}
   .standfirst{font-size:18px}
   .rec{grid-template-columns:1fr}
   .rec .plate-img{border-left:0;border-bottom:1px solid var(--line);aspect-ratio:3/2;order:0}
