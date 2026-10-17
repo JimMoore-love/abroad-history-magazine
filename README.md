@@ -23,10 +23,13 @@
 │   └── index.html                 ← 第 01 期《卢比孔》· 凯撒（罗马 · 共和末）
 ├── alexander-hellespont-2/
 │   └── index.html                 ← 第 02 期《赫勒斯滂》· 亚历山大（马其顿）
+├── hammurabi-blackstone-3/
+│   └── index.html                 ← 第 03 期《黑石》· 汉谟拉比（两河 · 苏美尔）
 └── .github/workflows/deploy.yml   ← CI/CD：push 即上线
 ```
 
-**工程侧**（不出现在本仓库）：`../caesar-rubicon-1/` 与 `../alexander-hellespont-2/`（各期构建工程，含 `parts/` 分片、
+**工程侧**（不出现在本仓库）：`../caesar-rubicon-1/`、`../alexander-hellespont-2/` 与 `../hammurabi-blackstone-3/`
+（各期构建工程，含 `parts/` 分片、
 `_build.py` / `_verify.py` / `_css.js` / `_smoke.js` 三件套、`_maps.py` 舆图引擎、
 `_img_post.py` 插画后处理），以及系列级脚本 `../_deploy_prep.py`、`../_gh_secrets.py`。
 
@@ -38,8 +41,9 @@
 |---|---|---|---|---|
 | 01 | 卢比孔 | 盖乌斯 · 尤利乌斯 · 凯撒 | 罗马 · 共和末 | `caesar-rubicon-1` |
 | 02 | 赫勒斯滂 | 马其顿的亚历山大 | 马其顿 | `alexander-hellespont-2` |
+| 03 | 黑石 | 汉谟拉比 | 两河 · 苏美尔 | `hammurabi-blackstone-3` |
 
-> 共 **2 期 / 2 个文明**。首页每页 3 期，现为 1 页。
+> 共 **3 期 / 3 个文明**。首页每页 3 期，现为 1 页。
 
 ### 第 01 期体量
 
@@ -64,6 +68,18 @@
 | 图表 | 11 幅（目录、编年表、兵力与政制诸表、图幅总目等） |
 | 图幅合计 | 25 幅 + 封面 1 幅（无编号） |
 | 单文件体积 | 约 4.31 MB（全部图片 base64 内嵌） |
+
+### 第 03 期体量
+
+| 项 | 数 |
+|---|---|
+| 页 | 11（封面 / 开篇 / 六卷 / 图版 / 对读 / 卷终） |
+| 汉字 | 约 36,087 |
+| AI 生成插画 | 12 幅（封面 1 + 正文 11，含封面无编号） |
+| 舆图 | 3 幅（两河诸邦形势 / 统一战争行迹 / 黑石的三段行程），程序依真实经纬度绘制 |
+| 图表 | 14 幅（塔庙立面、目录、名年表、四表、滚印、图幅总目、两造并列、四卡等） |
+| 图幅合计 | 25 幅 + 封面 1 幅（无编号） |
+| 单文件体积 | 约 4.06 MB（全部图片 base64 内嵌） |
 
 ---
 
@@ -110,7 +126,7 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
    `CIVILIZATIONS` 里已定义的 key（否则脚本直接报错退出）；
 3. 跑 `python ../_deploy_prep.py` —— 刊库首页会自动按文明分组、排序（按文明起始年，公元前为负数）、
    分页，并把单期复制进 `./<slug>/index.html`，最后打印全部文件的 SHA1；
-4. `git add -A && git commit -m "第 02 期《XX》· XXX" && git push`；
+4. `git add -A && git commit -m "第 03 期《黑石》· 汉谟拉比" && git push`；
 5. 等 Actions 变绿 —— sha1 比对不过就是红的。
 
 ## 校验哲学
@@ -142,6 +158,13 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
 > 成获清单 `.spolia`、界石条文 `.horos`、钱币条 `.drachma`、双栏对读 `.antilogia`、
 > 陶板印 `.pinax`、封面庙式 `.front-*` 一套，与第 01 期的十件容器**逐一互斥**，
 > 冒烟脚本对此写有否定断言。
+>
+> 第 03 期《黑石》再换为「泥板楔文 · 玄武岩黑 · 法典石台」——
+> 石台形制封面 `.stone-*`（band / art / title / ferro / line / cyl / celle / cells / foot）、
+> 泥板章头 `.tuppu`（楔文栏 + 拉丁栏双行编号）、铭注条 `.nota`、年号表 `.limmu`、
+> 法条条 `.lex`、塔庙立面 `.zigg`、双列名籍 `.tuppani`、滚印块 `.cyl`、
+> 上下两造 `.contr`（甲／乙两造并列，不替读者下判决），
+> 与第 01、02 期两套容器**三向互斥**；冒烟里对本刊与《列传》共 1066 个独有类名逐族扫过，命中 0。
 
 ## 许可
 
