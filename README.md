@@ -27,11 +27,14 @@
 │   └── index.html                 ← 第 03 期《黑石》· 汉谟拉比（两河 · 苏美尔）
 ├── ramesses-kadesh-4/
 │   └── index.html                 ← 第 04 期《卡迭石》· 拉美西斯二世（古埃及）
+├── hannibal-cannae-5/
+│   └── index.html                 ← 第 05 期《雪線》· 汉尼拔 · 巴卡（迦太基 · 腓尼基）
 └── .github/workflows/deploy.yml   ← CI/CD：push 即上线
 ```
 
 **工程侧**（不出现在本仓库）：`../caesar-rubicon-1/`、`../alexander-hellespont-2/`、
-`../hammurabi-blackstone-3/` 与 `../ramesses-kadesh-4/`（各期构建工程，含 `parts/` 分片、
+`../hammurabi-blackstone-3/`、`../ramesses-kadesh-4/` 与 `../hannibal-cannae-5/`
+（各期构建工程，含 `parts/` 分片、
 `_build.py` / `_verify.py` / `_css.js` / `_smoke.js` 三件套、`_maps.py` 舆图引擎、
 `_img_post.py` 插画后处理），以及系列级脚本 `../_deploy_prep.py`、`../_gh_secrets.py`。
 
@@ -45,8 +48,9 @@
 | 02 | 赫勒斯滂 | 马其顿的亚历山大 | 马其顿 | `alexander-hellespont-2` |
 | 03 | 黑石 | 汉谟拉比 | 两河 · 苏美尔 | `hammurabi-blackstone-3` |
 | 04 | 卡迭石 | 拉美西斯二世 | 古埃及 | `ramesses-kadesh-4` |
+| 05 | 雪線 | 汉尼拔 · 巴卡 | 迦太基 · 腓尼基 | `hannibal-cannae-5` |
 
-> 共 **4 期 / 4 个文明**。首页每页 3 期，现为 2 页。
+> 共 **5 期 / 5 个文明**。首页每页 3 期，现为 2 页。
 
 ### 第 01 期体量
 
@@ -96,6 +100,18 @@
 | 图幅合计 | 25 幅 + 封面 1 幅（无编号） |
 | 单文件体积 | 约 4.15 MB（全部图片 base64 内嵌） |
 
+### 第 05 期体量
+
+| 项 | 数 |
+|---|---|
+| 页 | 11（封面 / 开篇 / 六卷 / 图版 / 对读 / 卷终） |
+| 汉字 | 约 35,439 |
+| AI 生成插画 | 12 幅（封面 1 + 正文 11，含封面无编号） |
+| 舆图 | 3 幅（西地中海形势 / 坎尼战况 / 自新迦太基至意大利行迹），程序依真实经纬度绘制 |
+| 图表 | 11 幅（目录、名年表、财源表、围城四节点、五段行程、出兵兵力、兵种册、坎尼阵形条、伤亡表、图幅总目、对读四卡） |
+| 图幅合计 | 25 幅 + 封面 1 幅（无编号） |
+| 单文件体积 | 约 4.07 MB（全部图片 base64 内嵌） |
+
 ---
 
 ## 发布方式（CI/CD）
@@ -135,13 +151,13 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
 
 ## 新增一期的流程
 
-1. 在 `../` 下新建单期工程目录 `<slug>`，产出 `index.html` 单文件 + 封面缩略图 `_thumb1.jpg`；
+1. 在 `../` 下新建单期工程目录 `<slug>`，产出 `index.html` 单文件 + 封面缩略图 `_thumb<期号>.jpg`；
    （若沿用第 01 期的骨架，可直接复制 `caesar-rubicon-1/` 整套工具链，再换 `parts/00_head.html` 的色值与构件）
 2. 在 `../_deploy_prep.py` 的 `CATALOG` 末尾追加一条记录，**`civilization` 必须填**为
    `CIVILIZATIONS` 里已定义的 key（否则脚本直接报错退出）；
 3. 跑 `python ../_deploy_prep.py` —— 刊库首页会自动按文明分组、排序（按文明起始年，公元前为负数）、
    分页，并把单期复制进 `./<slug>/index.html`，最后打印全部文件的 SHA1；
-4. `git add -A && git commit -m "第 04 期《卡迭石》· 拉美西斯二世" && git push`；
+4. `git add -A && git commit -m "第 05 期《雪線》· 汉尼拔 · 巴卡" && git push`；
 5. 等 Actions 变绿 —— sha1 比对不过就是红的。
 
 ## 校验哲学
@@ -188,6 +204,18 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
 > 营造清单 `.monum`（四列网格）、方尖碑印 `.obel`、左右两造 `.dipy`、卷终地平线 `.horizon`、
 > 三分栏 `.triad`、订阅行 `.subscr`，与第 01、02、03 期三套容器**四向互斥**；
 > 冒烟脚本对本刊与《列传》《列国》前三期共 1300 余个独有类名逐族扫过，命中 0。
+>
+> 第 05 期《雪線》再换为「海图罗盘 · 布匿紫 · 四角直角规」——
+> 罗盘章头 `.rosa`（74px 十六点八芒星转盘 + 拉丁编号栏）、页边小注 `.glossa`（左浮动 208px、
+> 四角铜线折角）、四角直角规 `.portolano`（四个 `radial-gradient` 十字，专用于收束拉丁引文块）、
+> 阶梯名年表 `.gradus`（158px 起首列逐行右移，凡关键年加 `key` 加重）、
+> 双阵对峙 `.acies`（左 132px 番号／中 1fr 阵面／右 74px 结局）、
+> 兵种册 `.turmae`（四列，阵亡者加 `gone` 加删除线）、行军日程 `.itinera`（顶缘刻度 + 五段）、
+> 两造并置 `.duellum`（中缝 54px `.limbus` 内嵌 `.acu` 指针，不下判决）、
+> 双耳瓶立场 `.amphora`（`.jar` 44×104 圆腹双耳）、封面海图题名 `.charta-*`（band / art / name / ruler / pos / cells / cell / foot）、
+> 卷终 `.occasus`（海平线 `.hzn`）／`.trifaria`（三分栏）／`.impressum`（版权行），
+> 与第 01—04 期四套容器**五向互斥**；封面与卷终一律不设章头、不设页眉，
+> 冒烟脚本对本刊与《列传》《列国》前四期的独有类名逐族扫过，命中 0。
 
 ## 许可
 
