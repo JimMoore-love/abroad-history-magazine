@@ -29,11 +29,14 @@
 │   └── index.html                 ← 第 04 期《卡迭石》· 拉美西斯二世（古埃及）
 ├── hannibal-cannae-5/
 │   └── index.html                 ← 第 05 期《雪線》· 汉尼拔 · 巴卡（迦太基 · 腓尼基）
+├── cyrus-anshan-6/
+│   └── index.html                 ← 第 06 期《安善》· 居鲁士 · 二世（波斯 · 阿契美尼德）
 └── .github/workflows/deploy.yml   ← CI/CD：push 即上线
 ```
 
 **工程侧**（不出现在本仓库）：`../caesar-rubicon-1/`、`../alexander-hellespont-2/`、
-`../hammurabi-blackstone-3/`、`../ramesses-kadesh-4/` 与 `../hannibal-cannae-5/`
+`../hammurabi-blackstone-3/`、`../ramesses-kadesh-4/`、`../hannibal-cannae-5/`
+与 `../cyrus-anshan-6/`
 （各期构建工程，含 `parts/` 分片、
 `_build.py` / `_verify.py` / `_css.js` / `_smoke.js` 三件套、`_maps.py` 舆图引擎、
 `_img_post.py` 插画后处理），以及系列级脚本 `../_deploy_prep.py`、`../_gh_secrets.py`。
@@ -49,8 +52,9 @@
 | 03 | 黑石 | 汉谟拉比 | 两河 · 苏美尔 | `hammurabi-blackstone-3` |
 | 04 | 卡迭石 | 拉美西斯二世 | 古埃及 | `ramesses-kadesh-4` |
 | 05 | 雪線 | 汉尼拔 · 巴卡 | 迦太基 · 腓尼基 | `hannibal-cannae-5` |
+| 06 | 安善 | 居鲁士 · 二世 | 波斯 · 阿契美尼德 | `cyrus-anshan-6` |
 
-> 共 **5 期 / 5 个文明**。首页每页 3 期，现为 2 页。
+> 共 **6 期 / 6 个文明**。首页每页 3 期，现为 2 页。
 
 ### 第 01 期体量
 
@@ -112,9 +116,21 @@
 | 图幅合计 | 25 幅 + 封面 1 幅（无编号） |
 | 单文件体积 | 约 4.07 MB（全部图片 base64 内嵌） |
 
+### 第 06 期体量
+
+| 项 | 数 |
+|---|---|
+| 页 | 11（封面 / 开篇 / 六卷 / 图版 / 对读 / 卷终） |
+| 汉字 | 约 29,354 |
+| AI 生成插画 | 12 幅（封面 1 + 正文 11，含封面无编号） |
+| 舆图 | 3 幅（帝国形势 / 三次用兵行迹 / 巴比伦陷落），程序依真实经纬度绘制 |
+| 图表 | 13 幅（目录、砖铭年表、五种材料对照、米底之战四种解释、吕底亚之役与神谕、巴比伦陷落十天、居鲁士圆柱十二句、二十税区与岁入、御道驿程、四种死法、图幅总目、两造辩难块、两造之外四卡） |
+| 图幅合计 | 27 幅 + 封面 1 幅（无编号） |
+| 单文件体积 | 约 3.54 MB（全部图片 base64 内嵌） |
+
 ---
 
-## 发布方式（CI/CD）
+## 新增一期的流程
 
 **不要手动 scp 上传。** 把改动 push 到 `main` 即可，GitHub Actions 会自动完成整条链路：
 
@@ -157,7 +173,7 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
    `CIVILIZATIONS` 里已定义的 key（否则脚本直接报错退出）；
 3. 跑 `python ../_deploy_prep.py` —— 刊库首页会自动按文明分组、排序（按文明起始年，公元前为负数）、
    分页，并把单期复制进 `./<slug>/index.html`，最后打印全部文件的 SHA1；
-4. `git add -A && git commit -m "第 05 期《雪線》· 汉尼拔 · 巴卡" && git push`；
+4. `git add -A && git commit -m "第 06 期《安善》· 居鲁士 · 二世" && git push`；
 5. 等 Actions 变绿 —— sha1 比对不过就是红的。
 
 ## 校验哲学
@@ -216,6 +232,21 @@ tar 管道上传到 /usr/share/nginx/html/abroad-history-magazine/
 > 卷终 `.occasus`（海平线 `.hzn`）／`.trifaria`（三分栏）／`.impressum`（版权行），
 > 与第 01—04 期四套容器**五向互斥**；封面与卷终一律不设章头、不设页眉，
 > 冒烟脚本对本刊与《列传》《列国》前四期的独有类名逐族扫过，命中 0。
+>
+> 第 06 期《安善》再换为「波斯波利斯 · 阶梯浮雕 · 三语铭格」——
+> 章头换成阿帕达纳式 `.apan`（左右两列 `.acol` 夹中轴编号，凡九章）、
+> 页框改三色横带 `.b`（纸 / 群青 / 砖红，替掉第 05 期的四角直角规）、
+> 楔形纹带 `.wedge`（上行楔尖朝下、下行朝上，作分节符）、
+> 阶梯砌带 `.step`（每级右移 16px 的七级台阶）、砌纹柱 `.cylin`（柱身横砌纹 + 柱头双涡卷）、
+> 铭板 `.slab`（石面凹刻三行）、三语铭注 `.tril`（三列并置，波斯 / 埃兰 / 巴比伦三体并列不排序）、
+> 柱铭引文 `.pull`（左柱右文）、砖铭年表 `.brik`／`.brk`（2 组 22 格，7 格加 `key` 加重）、
+> 行省贡赋表 `.satrap`（20 税区）、御道驿程 `.road`／`.st`（6 站，2 站加 `key`）、
+> 阶梯中缝对读 `.disput`／`.spine`（中缝 60px `.spine` 内嵌 `.dot` 铭点，两造并列不判决）、
+> 有翼日盘 `.farohar`（`.wing` 双翼 + `.disc` 圆盘 + `.lede`）、
+> 封面阶梯台基 `.fr-band`／`.fr-art`／`.fr-wing`／`.fr-name`／`.fr-name-line`／`.fr-step`／`.fr-line`／`.fr-cells`／`.fr-cell`／`.fr-mark`／`.fr-foot`、
+> 卷终 `.epilog`／`.triad`／`.colophon`，
+> 与第 01—05 期五套容器**六向互斥**；封面与卷终一律不设章头、不设页眉，
+> 冒烟脚本以 103 个旧类名的精确集合对本页做否定断言，命中 0。
 
 ## 许可
 
